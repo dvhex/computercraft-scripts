@@ -137,25 +137,25 @@ function workStep(height)
     rotate()
 end
 
-local height=62
-local lenght=4
-local width=4
+local height=63
+local length=8
+local width=8
 
 local x=0
 local y=0
 local z=0
 
-for i=1,width,1 do
-    for j=1,lenght,1 do
-        move(x*2,y*3-x,z)
+for i=1,length,1 do
+    for j=1,width,1 do
+        move(x*2+y,y*2-x,z)
         workStep(height)
-        move(-x*2,-y*3+x,-z)
+        move(-x*2-y,-y*2+x,-z)
         while clear() == false do
             z=z-1
             stepUp()
         end
-        y=y+1
+        x=x+1
     end
-    y=0
-    x=x+1
+    x=0
+    y=y+2
 end
