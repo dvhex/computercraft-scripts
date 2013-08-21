@@ -1,15 +1,36 @@
---Программа роет шахту (туннель 1x2 через 2 блока)--
---В первом слоте должно быть топливо, в 15м сундуки, в 16м факелы--
 function putfakel()
-    turtle.select(16)
-    turtle.placeDown()
+    for i=2,4,1 do
+        if turtle.getItemCount(i) > 1 then
+            turtle.select(i)
+            turtle.placeDown()
+            break
+        end
+    end
+end
+
+function tryRefuel()
+    local result = true;
+    turtle.select(1)
+    if turtle.getItemCount(1) <= 1 then
+        result = false
+    else
+        if turtle.getFuelLevel() < 80 then
+            turtle.refuel(1)
+        end
+    end
+    return result;
+end
+
+function stepForward()
+    tryRefuel()
+    repeat
+        turtle.dig()
+    until turtle.forward()
 end
 
 function tunnel(lenght)
     for i=0,lenght-1,1 do
-        while turtle.forward() ~= true do
-            turtle.dig()
-        end
+        stepForward()
         turtle.digDown()
         if i % 8 == 0 then
             putfakel()
@@ -18,11 +39,8 @@ function tunnel(lenght)
 end
 
 function go(lenght)
-    local i=0
-    while i<lenght do
-        if turtle.forward() then
-            i=i+1
-        end
+    for i=1,lenght,1 do
+        stepForward()
     end
 end
 
@@ -39,13 +57,18 @@ function turn(right)
     end
 end
 
-function clear()
-    turtle.select(15)
-    turtle.digDown()
-    turtle.placeDown()
-    for i=1,14,1 do
+function clear(pos, right, ending)
+    local len = pos*6 + 4
+    turn(not right)
+    go(len)
+    for i=5,16,1 do
         turtle.select(i)
         turtle.dropDown()
+    end
+    if not ending then
+        rotate()
+        go(len)
+        turn(not right)
     end
 end
 
@@ -67,14 +90,13 @@ function step(lenght, right, first)
     turn(not right)
     tunnel(lenght)
     rotate()
-    clear()
 end
 
-turtle.select(1)
-turtle.refuel()
 
 local count=4
 local size=64
+local right=true
 for i=0,count-1,1 do
-    step(size,false,i==0)
+    step(size,right,i==0)
+    clear(i, right, i==count-1)
 end
