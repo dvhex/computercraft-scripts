@@ -16,6 +16,16 @@ function tryRefuel()
     return result;
 end
 
+function putfakel()
+    for i=2,4,1 do
+        if turtle.getItemCount(i) > 1 then
+            turtle.select(i)
+            turtle.placeUp()
+            break
+        end
+    end
+end
+
 function stepForward()
     tryRefuel()
     while turtle.forward() == false do
@@ -116,3 +126,11 @@ function clear()
     turtle.turnRight()
     return result
 end
+
+function tunnel(lenght)
+    for i=0,lenght-1,1 do
+        stepForward()
+        turtle.digDown()
+    end
+end
+
