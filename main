@@ -1,3 +1,11 @@
+function turn(right)
+    if right then
+        turtle.turnRight()
+    else
+        turtle.turnLeft()
+    end
+end
+
 function rotate()
     turtle.turnRight()
     turtle.turnRight()
@@ -111,6 +119,15 @@ function vDigRound()
     turtle.digUp()
 end
 
+function selectNoEmpty(first_item, end_item)
+    for i=first_item,end_item,1 do
+        if turtle.getItemCount(i) > 1 then
+            turtle.select(i)
+            break
+        end
+    end
+end
+
 function clear()
     local result = true
     turtle.turnLeft()
@@ -127,10 +144,26 @@ function clear()
     return result
 end
 
+function clearTunnel(lenght)
+    for i=0,lenght-1,1 do
+        stepForward()
+        turtle.digDown()
+    end
+end
+
 function tunnel(lenght)
     for i=0,lenght-1,1 do
         stepForward()
         turtle.digDown()
+        if i % 8 == 0 then
+            putfakel()
+        end
+    end
+end
+
+function go(lenght)
+    for i=1,lenght,1 do
+        stepForward()
     end
 end
 

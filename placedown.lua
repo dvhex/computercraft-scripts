@@ -1,52 +1,31 @@
-function rotate()
-    turtle.turnRight()
-    turtle.turnRight()
-end
+os.loadAPI("disk/main")
 
-function tryRefuel()
-    local result = true;
-    if turtle.getItemCount(1) <= 1 then
-        result = false
-    else
-        if turtle.getFuelLevel() < 80 then
-            turtle.select(1)
-            turtle.refuel(1)
-        end
-    end
-    return result;
-end
-
-function stepForward()
-    tryRefuel()
-    while turtle.forward() == false do
-
-    end
-end
-
-function workStep(l,index)
+function workStep(l)
     for i=1,l,1 do
-        stepForward()
-        turtle.select(index)
+        main.stepForward()
+        main.selectNoEmpty(2,16)
         turtle.placeDown()
     end
     turtle.turnRight()
-    stepForward()
+    main.stepForward()
     turtle.turnRight()
     for i=1,l,1 do
-        turtle.select(index)
+        main.selectNoEmpty(2,16)
         turtle.placeDown()
-        stepForward()
+        main.stepForward()
     end
     turtle.turnLeft()
-    stepForward()
+    main.stepForward()
     turtle.turnLeft()
 end
 
-local x=2
-local y=32
+print("input x:")
+local x=read()
+print("input y:")
+local y=read()
 
 x=x/2
 
 for i=1,x,1 do
-    workStep(y,i+1)
+    workStep(y)
 end
