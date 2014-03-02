@@ -36,9 +36,16 @@ function step(lenght, right, first)
 end
 
 
-local count=4
-local size=64
-local right=true
+print("input count of tunnel pairs:")
+local count=read()
+print("input length of mine:")
+local size=read()
+print("input direction of moving:")
+local z=read()
+local right=false
+if (z == 1) then
+    right = true
+end
 for i=0,count-1,1 do
     step(size,right,i==0)
     clear(i, right, i==count-1)
