@@ -1,11 +1,11 @@
-os.loadAPI("main")
+os.loadAPI("disk/main")
 
 local max_filter_item=4 -- Если задать 1, фильтр не сработает и будет работать, как обычный карьер
 
 function workStep(height)
     for i=1,height,1 do
         main.stepDown()
-        if main.selectNoEmpty(2,max_filter_item) then
+        if i>1 and main.selectNoEmpty(2,max_filter_item) then
             turtle.placeUp()
         end
         main.hFilterDigRound(2,max_filter_item)
@@ -28,7 +28,7 @@ function workStep(height)
     main.rotate()
 end
 
-local height=63
+local height=64
 local length=8
 local width=8
 

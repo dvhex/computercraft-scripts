@@ -109,7 +109,7 @@ function hDigRound()
     end
 end
 
-function detectWith(firts_item, end_item)
+function detectWith(first_item, end_item)
     for i=first_item, end_item, 1 do
         turtle.select(i)
         if turtle.compare() then
