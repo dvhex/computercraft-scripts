@@ -1,17 +1,25 @@
 os.loadAPI("main")
 
+local max_filter_item=4 -- Если задать 1, фильтр не сработает и будет работать, как обычный карьер
+
 function workStep(height)
     for i=1,height,1 do
         main.stepDown()
-        main.hDigRound()
+        if main.selectNoEmpty(2,max_filter_item) then
+            turtle.placeUp()
+        end
+        main.hFilterDigRound(2,max_filter_item)
     end
     main.moveForward(2)
     turtle.turnRight()
     main.stepForward()
     turtle.turnLeft()
     for i=1,height,1 do
-        main.hDigRound()
+        main.hFilterDigRound(2,max_filter_item)
         main.stepUp()
+        if main.selectNoEmpty(2,max_filter_item) then
+            turtle.placeDown()
+        end
     end
     turtle.turnLeft()
     main.stepForward()
@@ -33,7 +41,7 @@ for i=1,length,1 do
         main.move(x*2+y,y*2-x,z)
         workStep(height)
         main.move(-x*2-y,-y*2+x,-z)
-        while main.clear() == false do
+        while main.clearRangeInInventory(max_filter_item+1,16) == false do
             z=z-1
             main.stepUp()
         end

@@ -109,6 +109,25 @@ function hDigRound()
     end
 end
 
+function detectWith(firts_item, end_item)
+    for i=first_item, end_item, 1 do
+        turtle.select(i)
+        if turtle.compare() then
+            return false
+        end
+    end
+    return true
+end
+
+function hFilterDigRound(first_item, end_item)
+    for i=1,4,1 do
+        if detectWith(first_item, end_item) then
+            turtle.dig()
+        end
+        turtle.turnRight()
+    end
+end
+
 function vDigRound()
     turtle.digDown()
     turtle.turnRight()
@@ -123,15 +142,16 @@ function selectNoEmpty(first_item, end_item)
     for i=first_item,end_item,1 do
         if turtle.getItemCount(i) > 1 then
             turtle.select(i)
-            break
+            return true
         end
     end
+    return false
 end
 
-function clear()
+function clearRangeInInventory(first_item, end_item)
     local result = true
     turtle.turnLeft()
-    for i=2,16,1 do
+    for i=first_item,end_item,1 do
         if turtle.getItemCount(i) ~= 0 then
             turtle.select(i)
             if turtle.drop() == false then
@@ -142,6 +162,10 @@ function clear()
     end
     turtle.turnRight()
     return result
+end
+
+function clear()
+    return clearRangeInInventory(2,16)
 end
 
 function clearTunnel(lenght)
