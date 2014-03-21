@@ -1,5 +1,13 @@
 os.loadAPI("disk/main")
 
+function goUp(high)
+    local h = high-3
+    while h>0 do
+        main.moveUp(3)
+        h = h - 3
+    end
+end
+
 function tunnel3(length)
     for i=1,length,1 do
         main.stepForward()
@@ -8,15 +16,24 @@ function tunnel3(length)
     end
 end
 
-function workStep(length)
-    tunnel3(length)
+function rawWorkStep(length)
+    tunnel3(length-1)
     turtle.turnRight()
     tunnel3(1)
     turtle.turnRight()
-    tunnel3(length)
+    tunnel3(length-1)
+end
+
+function fullWorkStep(length)
+    rawWorkStep(length)
     turtle.turnLeft()
     tunnel3(1)
     turtle.turnLeft()
+end
+
+function lastWorkStep(length)
+    rawWorkStep(length)
+    turtle.turnRight()
 end
 
 function clearInventory()
@@ -37,17 +54,23 @@ local y=read()
 print("input z:")
 local z=read()
 
+tunnel3(1)
+goUp(z)
 x=x/2
-z=z/3
+z=(z+2)/3 -- при высоте 1-3 будет 1, 4-6 - 2 и т.д.
 for k=1,z,1 do
-    for i=1,x,1 do
-        workStep(y)
+    for i=1,x-1,1 do
+        fullWorkStep(y)
     end
-    turtle.turnLeft()
-    main.moveForward(x*2)
+    lastWorkStep(y)
+    tunnel3(x*2-1)
     clearInventory()
-    turtle.turnRight()
-    if k ~= z then
+    if k <= z-1 then
+        turtle.turnRight()
         main.moveDown(3)
+    else
+        turtle.turnLeft()
+        main.stepForward()
+        main.rotate()
     end
 end
