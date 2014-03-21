@@ -28,9 +28,12 @@ function workStep(height)
     main.rotate()
 end
 
-local height=64
-local length=8
-local width=8
+print("Input height:")
+local height=read()
+print("Input length [8]:")
+local length=read()
+print("Input width [8]:")
+local width=read()
 
 local x=0
 local y=0
