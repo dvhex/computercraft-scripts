@@ -40,7 +40,7 @@ print("input count of tunnel pairs:")
 local count=read()
 print("input length of mine:")
 local size=read()
-print("input direction of moving:")
+print("input direction of moving (0-left, 1-right):")
 local z=read()
 local right=false
 if (z == 1) then
