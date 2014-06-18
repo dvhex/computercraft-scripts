@@ -41,6 +41,11 @@ local z=0
 
 for i=1,length,1 do
     for j=1,width,1 do
+        -- Хватит топлива на следующий шаг? (с запасом в 1 кусок угля, если это уголь, конечно)
+        while 2 * (x + 3*y + z + 3 + height) > turtle.getFuelLevel() + (turtle.getItemCount(1) - 2) * 80 do
+            print("Not enouth fuel for next step! Please input fuel in 1st slot and press Enter.")
+            read()
+        end
         main.move(x*2+y,y*2-x,z)
         workStep(height)
         main.move(-x*2-y,-y*2+x,-z)
