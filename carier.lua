@@ -31,7 +31,7 @@ end
 print("Input height:")
 local height=read()
 print("Input length [8]:")
-local length=read()
+local length=read()/2
 print("Input width [8]:")
 local width=read()
 
