@@ -1,3 +1,12 @@
+-- Скрипт работает следующим образом:
+-- Ставим черепаху справа сверху от сундука, рядом ставим дисковод, переходим в
+-- паку "disk", вызываем скрипт. Черепашка копает тоннели высотой 2 блока на
+-- расстоянии 2 блока друг от друга. При вызове скрипта задаётся количество пар
+-- тоннелей, длина тоннелей и направление (в случае выбора левого направления,
+-- черепашку ставить слева от сундука. В инвенторе в первой позиции должен быть
+-- уголь, желательно каменный, чтобы черепашка могла его пополнять, и следующие
+-- три позиции - факелы, чтобы черепашка освещала туннели.
+
 os.loadAPI("disk/main")
 
 function clear(pos, right, ending)
@@ -37,14 +46,25 @@ end
 
 
 print("input count of tunnel pairs:")
-local count=read()
+local count=tonumber(read())
+print("count tunnel pairs is " .. count)
 print("input length of mine:")
-local size=read()
+local size=tonumber(read())
+print("length of mine is " .. size)
 print("input direction of moving (0-left, 1-right):")
-local z=read()
+local z=tonumber(read())
 local right=false
-if (z == 1) then
-    right = true
+if (z == 0) then
+    right = false
+    print("direction is left")
+else
+    if (z == 1) then
+        right = true
+        print("direction is right")
+    else
+        print("Incorrect direction: " .. z);
+        return
+    end
 end
 for i=0,count-1,1 do
     step(size,right,i==0)
